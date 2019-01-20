@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head::head(testTitle)"></div>
+<body>
+<table th:object="${category}">
+    <caption>Notes</caption>
+    <thead>
+    <th>Id</th>
+    <th>Description</th>
+    <th>Text</th>
+    <th></th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="note,iter : ${notes}" th:class="${iter.even?'even':'odd'}">
+        <th th:utext="${iter.index+1}"></th>
+        <th th:utext="${note.id}"></th>
+        <th th:utext="${note.description}"></th>
+        <th>
+            <a th:href="@{/edit-note(id=${note.id})}">Edit</a>
+        </th>
+        <th>
+            <a th:href="@{/delete-note(id=${note.id})}">Delete</a>
+        </th>
+    </tr>
+    </tbody>
+    <form th:action="@{/create-note/{id}/(id=${category.id})}" method="get">
+        <button type="submit">Create</button>
+    </form>
+</table>
+</body>
+</html>

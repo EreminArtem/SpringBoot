@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="/fragments/head::head(testTitle)"></div>
+<body>
+<form th:action="@{/save-category}" th:object="${category}" method="post">
+    <input type="text" th:field="*{id}">
+    <input type="text" th:field="*{name}">
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
