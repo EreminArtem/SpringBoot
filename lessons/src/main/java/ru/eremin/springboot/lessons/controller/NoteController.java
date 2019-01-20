@@ -3,11 +3,7 @@ package ru.eremin.springboot.lessons.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.eremin.springboot.lessons.entity.Category;
+import org.springframework.web.bind.annotation.*;
 import ru.eremin.springboot.lessons.entity.Note;
 import ru.eremin.springboot.lessons.repository.CategoryRepository;
 import ru.eremin.springboot.lessons.repository.NoteRepository;
@@ -27,10 +23,10 @@ public class NoteController {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @RequestMapping(value = "/notes", method = RequestMethod.GET)
-    public String notes(@RequestParam("id") String id, Model model) {
-        model.addAttribute("category", categoryRepository.findById(id));
-        model.addAttribute("notes", repository.findNotesByCategoryId(id));
+    @RequestMapping(value = "/notes/{id}", method = RequestMethod.GET)
+    public String notes(@PathVariable("id") String id, Model model) {
+        model.addAttribute("category", categoryRepository.findById(id))
+                .addAttribute("notes", repository.findNotesByCategoryId(id));
         return "note-view";
     }
 
@@ -41,26 +37,23 @@ public class NoteController {
         return "note-edit-view";
     }
 
-    @RequestMapping(value = "save-note", method = RequestMethod.POST)
-    public String save(@ModelAttribute("note") Note note,
-                       @ModelAttribute("category") Category category) {
+    @RequestMapping(value = "/save-note", method = RequestMethod.POST)
+    public String save(@ModelAttribute("note") Note note) {
         repository.merge(note);
-        return "redirect:/notes?id=" + category.getId();
+        return "redirect:/notes/" + note.getCategoryId();
     }
 
     @RequestMapping(value = "/delete-note", method = RequestMethod.GET)
-    public String delete(@RequestParam("id") String id,
-                         @ModelAttribute("category") Category category) {
+    public String delete(@RequestParam("id") String id) {
+        final String categoryId = repository.findById(id).getCategoryId();
         repository.delete(id);
-        return "redirect:/notes?id=" + category.getId();
+        return "redirect:/notes/" + categoryId;
     }
 
-    @RequestMapping(value = "/create-note", method = RequestMethod.GET)
-    public String create(@ModelAttribute("category") Category category) {
-        final Note note = new Note("New Note", "", category.getId());
+    @RequestMapping(value = "/create-note/{id}", method = RequestMethod.GET)
+    public String create(@PathVariable("id") String id) {
+        final Note note = new Note("New Note", "", id);
         repository.merge(note);
-        System.out.println(category.getName());
-        System.out.println(repository.findAll());
-        return "redirect:/notes?id=" + category.getId();
+        return "redirect:/notes/" + id;
     }
 }

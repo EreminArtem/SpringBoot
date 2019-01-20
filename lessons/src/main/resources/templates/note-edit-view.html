@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<div th:replace="/fragments/head::head(testTitle)"></div>
 <body>
 <form th:action="@{/save-note}" th:object="${note}" method="post">
     <input type="text" th:field="*{id}">
     <input type="text" th:field="*{description}">
     <input type="text" th:field="*{data}">
+    <input type="text" style="display: none" th:field="*{categoryId}">
     <button type="submit">Save</button>
 </form>
 </body>

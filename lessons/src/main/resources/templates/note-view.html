@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<div th:replace="/fragments/head::head(testTitle)"></div>
 <body>
 <table th:object="${category}">
     <caption>Notes</caption>
@@ -27,7 +24,7 @@
         </th>
     </tr>
     </tbody>
-    <form action="/create-note" method="get">
+    <form th:action="@{/create-note/{id}/(id=${category.id})}" method="get">
         <button type="submit">Create</button>
     </form>
 </table>
