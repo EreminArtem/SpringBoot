@@ -5,11 +5,11 @@
 <table th:object="${category}">
     <caption>Notes</caption>
     <thead>
-        <th>Id</th>
-        <th>Description</th>
-        <th>Text</th>
-        <th></th>
-        <th></th>
+    <th>Id</th>
+    <th>Description</th>
+    <th>Text</th>
+    <th></th>
+    <th></th>
     </thead>
     <tbody>
     <tr th:each="note,iter : ${notes}" th:class="${iter.even?'even':'odd'}">
