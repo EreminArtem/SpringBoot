@@ -1,0 +1,58 @@
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xl="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://eremin.ru/springboot/lessons/soap/note"
+        targetNamespace="http://eremin.ru/springboot/lessons/soap/note"
+        elementFormDefault="qualified">
+
+    <xs:complexType name="noteRecord">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="data" type="xs:string"/>
+            <xs:element name="categoryId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="findNoteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="findNoteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="note" type="tns:noteRecord"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="findAllRequest">                              
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="categoryId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="findAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="rows" type="tns:noteRecord" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="data" type="xs:string"/>
+                <xs:element name="categoryName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
