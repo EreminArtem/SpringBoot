@@ -1,4 +1,4 @@
-package ru.eremin.springboot.lessons.integration;
+package ru.eremin.springboot.lessons.integration.message;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
